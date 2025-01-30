@@ -1,5 +1,4 @@
 import { useEffect, useState, useCallback } from "react";
-import axios from "axios";
 import "../Styles/HomeStyle.css";
 import { Col, Container, Row } from "react-bootstrap";
 import Cards from "./Cards";
@@ -8,7 +7,7 @@ import { Chart } from "react-google-charts";
 import Button from 'react-bootstrap/Button';
 import { usePayoutContext } from './Payoutcontext';
 import { jsPDF } from "jspdf";
-
+import axios from "axios";
 function Dashboard() {
   const [input, setInput] = useState(""); // Author name input
   const [type, setType] = useState(""); // Content type filter
@@ -34,25 +33,15 @@ function handletotal(count) {
 const [news, setNews] = useState([]);
 
 
-const url = process.env.REACT_APP_API_KEY;
-
-const getNews = async () => {
-  try {
-    const response = await fetch(url); // Use url directly as a string
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-    const data = await response.json();
-    setNews(data.articles); // Ensure setNews is a valid state setter function
-  } catch (error) {
-    console.error("Error fetching news:", error);
-  }
-};
-
- 
-useEffect(() => {
-  getNews();
-}, []);
+useEffect(()=>{
+     axios.get(process.env.REACT_APP_NEWS_API_URL)
+     .then((res)=>{
+      setNews(res.data.articles);
+     })
+     .catch((err)=>{
+        console.log(err);
+     })
+},[])
 
 
 const downloadCSV = () => {
