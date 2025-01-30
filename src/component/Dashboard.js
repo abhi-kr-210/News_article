@@ -30,10 +30,21 @@ function handletotal(count) {
 }
 // fetching of articles
 const [news, setNews] = useState([]);
-console.log(process.env.REACT_APP_NEWS_API_URL);
+
+// Load environment variables
+const apiKey = process.env.REACT_APP_NEWS_API_KEY;
+const baseUrl = process.env.REACT_APP_NEWS_API_BASE_URL;
+
+// Define query parameters
+const query = "tesla";
+const fromDate = "2024-12-30";
+const sortBy = "publishedAt";
+
+// Construct the full URL
+const url = `${baseUrl}/everything?q=${query}&from=${fromDate}&sortBy=${sortBy}&apiKey=${apiKey}`;
 
 useEffect(()=>{
-     axios.get(process.env.REACT_APP_NEWS_API_URL)
+     axios.get(url)
      .then((res)=>{
       setNews(res.data.articles);
      })
