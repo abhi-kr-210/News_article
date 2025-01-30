@@ -1,10 +1,9 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import "../Styles/HomeStyle.css";
 import { Col, Container, Row } from "react-bootstrap";
 import Cards from "./Cards";
 import Table from 'react-bootstrap/Table';
 import { Chart } from "react-google-charts";
-import Button from 'react-bootstrap/Button';
 import { usePayoutContext } from './Payoutcontext';
 import { jsPDF } from "jspdf";
 import axios from "axios";
@@ -31,7 +30,7 @@ function handletotal(count) {
 }
 // fetching of articles
 const [news, setNews] = useState([]);
-
+console.log(process.env.REACT_APP_NEWS_API_URL);
 
 useEffect(()=>{
      axios.get(process.env.REACT_APP_NEWS_API_URL)
